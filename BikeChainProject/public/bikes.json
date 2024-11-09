@@ -1,0 +1,38 @@
+{
+    "available":[
+        {
+            "id":"0",   
+            "price": "$0.00",
+            "condition": "10",
+            "long": "",
+            "lat": "",
+            "prevOwners":[]
+        },
+        {
+            "id":"1",   
+            "price": "$0.00",
+            "condition": "10",
+            "long": "",
+            "lat": "",
+            "prevOwners":[]
+        },
+        {
+            "id":"2",   
+            "price": "$0.00",
+            "condition": "10",
+            "long": "",
+            "lat": "",
+            "prevOwners":[]
+        }
+    ],
+    "currentlyLeasing":[
+        {   
+            "price": "$0.00",
+            "condition": "10",
+            "long": "",
+            "lat": "",
+            "prevOwners":[]
+        }
+    ]
+
+}
