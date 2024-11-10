@@ -54,7 +54,8 @@ function App() {
     ],
     "currentlyLeasing": [
         {
-            "price": "$0.00",
+            "id": "5",
+            "price": "$7.25",
             "condition": "10",
             "long": "",
             "lat": "",
@@ -106,24 +107,29 @@ function App() {
 
 
   const handleListRental = (bikeId) => {
+    console.log("GIMME THAT SHIT RN");
+    console.log(bikeId);
     const newBikes = { ...bikes }; // Create a copy of the bikes state
   
     // Find the index of the bike to be moved in the available array
     const leasingIndex = newBikes.currentlyLeasing.findIndex(bike => bike.id === bikeId);
   
     // Remove the bike from the leasing array
-    const bikeToMove = newBikes.available.splice(leasingIndex, 1)[0];
-  
+    const bikeToMove = newBikes.currentlyLeasing.splice(leasingIndex, 1)[0];
+    bikeToMove.long = userLoc.longitude;
+    bikeToMove.lat = userLoc.latitude;
+    console.log(bikeToMove);
     // Add the bike to the available array
     newBikes.available.push(bikeToMove);
   
     // Update the state with the new bikes object
     setBikes(newBikes);
+    console.log(bikes);
   };
 
   useEffect(() => {
     (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-      key: "INSERTKEY",
+      key: "YOURAPIKEYHERE",
       v: "weekly",
       // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
       // Add other bootstrap parameters as needed, using camel case.
@@ -172,11 +178,14 @@ function App() {
           const { target } = domEvent;
           console.log(target.textContent)
           setId(target.textContent);
+
           //scroll to the bike listing
           const parentDiv = document.getElementById('availableListings');
           const targetElement = document.getElementById('target-section');
           const targetOffset = targetElement.offsetTop;
           parentDiv.scrollTop = targetOffset;
+          // console.log("IM SCROLLING TO THE ITEM")
+          
 
           infoWindow.close();
           infoWindow.setContent(marker.title);
@@ -252,8 +261,9 @@ function App() {
           <div className="m-4 min-h-screen border-2 border-black bg-white shadow-lg rounded-md">
             <div className="flex flex-col justify-center">
                 <h1 className="flex justify-center text-balance m-2 font-bold">Available Bikes</h1>
-              <button className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
-              onClick={handleNewLease}>
+              <button type="button" className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
+              >
+{/* onClick={handleNewLease} */}
                 <span className="relative z-10">New Bike Listing</span>
               </button>
             </div>
@@ -266,8 +276,9 @@ function App() {
                   <p className="text-lg p-2 mt-2 mb-2">Price: {bike.price}/hr</p>
                   <p className="text-lg p-2 mt-2 mb-2">Distance From You: {haversineDistance(bike.lat, bike.long, userLoc.latitude, userLoc.longitude).toFixed(2)} miles</p>
                   {bike.id == highlightId ?                  
-                    <button className="w-full text-red hover:before:bg-blue-500 border-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
-                    Click={handleRentOut(bike.id)}>
+                    <button type="button" className="w-full text-red hover:before:bg-blue-500 border-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
+                    onClick={() => handleRentOut(bike.id)}>
+                      {/*  */}
                       <span className="relative z-10">Check out</span>
                         </button>
                     :<></>
@@ -277,20 +288,20 @@ function App() {
               ))}
             </div>
             <hr></hr>
-            <div className="flex flex-col justify-center">
+            {/* <div className="flex flex-col justify-center"> */}
                 <h1 className="flex justify-center text-5xl font-bold">Currently Renting</h1>
                 <div id="currentlyLeasing" className="h-1/4 flex flex-col m-3 overflow-auto">
                   {bikes.currentlyLeasing.map((bike, index) => (
                   <>
                   {/* <hr></hr> */}
-                  <div id={bike.id == highlightId ?"target-section":""} className={bike.id == highlightId ? "font-bold border-2 border-blue-500 p-2 rounded-lg shadow-xl" : "mt-2 mb-2 border-t-2" } key={index}>
+                  <div className="mt-2 mb-2 border-t-2" key={index}>
                     <p className="text-lg mt-2 mb-2">Bike ID: {bike.id}</p>
                     <p className="text-lg mt-2 mb-2">Price: {bike.price}/hr</p>
                     <p className="text-lg mt-2 mb-2">Last known location: {userLoc.latitude}, {userLoc.longitude} </p>
                     <div className="flex flex-col justify-center">
-                      <button className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
-                      onClick={handleListRental}>
-                        <span className="relative z-10">Put Bike Up For Leasing</span>
+                      <button type="button" className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
+                      onClick={() => handleListRental(bike.id)}>
+                        <span className="relative z-10">Return Bike</span>
                       </button>
                     </div>
                     
@@ -298,7 +309,7 @@ function App() {
                   </>
                   ))}
                 </div>
-            </div>
+            {/* </div> */}
 
 
           </div>
@@ -308,7 +319,14 @@ function App() {
 
       </div>
 
-      {isOn && (<Modal toggle={() => setIsOn(false)}></Modal>)}
+      {isOn && (
+        <div className="static">
+          <div className="fixed h-screen w-screen bg-black z-10 top-0 opacity-75">
+            <button type="button" onClick={setIsOn(false)}>X</button>
+            {/* Form here for new bike */}
+          </div>
+        </div>
+      )}
 
     </div>
   )
