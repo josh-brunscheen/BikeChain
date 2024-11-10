@@ -1,4 +1,15 @@
-# React + Vite
+# TO-DO:
+- ~~Distance from you~~
+- ~~Selected bike highlighting- onclick event: ~~
+- ~~Checkout button~~
+- Return bike button (change coordinates for bike to user's current coordinates)
+- Modal to lease a bike
+- Practice presentation
+- Ask about judgement
+
+
+
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

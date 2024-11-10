@@ -1,38 +1,37 @@
 {
-    "available":[
+    "available": [
         {
-            "id":"0",   
+            "id": "0",
             "price": "$0.00",
             "condition": "10",
-            "long": "",
-            "lat": "",
-            "prevOwners":[]
+            "long": -73.6876,
+            "lat": 42.7281,
+            "prevOwners": []
         },
         {
-            "id":"1",   
+            "id": "1",
             "price": "$0.00",
             "condition": "10",
-            "long": "",
-            "lat": "",
-            "prevOwners":[]
+            "long": -73.6880,
+            "lat": 42.7281,
+            "prevOwners": []
         },
         {
-            "id":"2",   
+            "id": "2",
             "price": "$0.00",
             "condition": "10",
-            "long": "",
-            "lat": "",
-            "prevOwners":[]
+            "long": -73.6870,
+            "lat": 42.7281,
+            "prevOwners": []
         }
     ],
-    "currentlyLeasing":[
-        {   
+    "currentlyLeasing": [
+        {
             "price": "$0.00",
             "condition": "10",
             "long": "",
             "lat": "",
-            "prevOwners":[]
+            "prevOwners": []
         }
     ]
-
 }
