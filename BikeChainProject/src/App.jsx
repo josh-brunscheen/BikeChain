@@ -40,7 +40,7 @@ function App() {
           "price": "$4.25",
           "condition": "10",
           "long": -73.6950,
-          "lat": 42.7081,
+          "lat": 42.7089,
           "prevOwners": []
         },
         {
@@ -49,6 +49,38 @@ function App() {
           "condition": "10",
           "long": -73.65,
           "lat": 42.7281,
+          "prevOwners": []
+        },
+        {
+          "id": "6",
+          "price": "$10.25",
+          "condition": "10",
+          "long": -73.65,
+          "lat": 42.7060,
+          "prevOwners": []
+        },
+        {
+          "id": "7",
+          "price": "$5.25",
+          "condition": "10",
+          "long": -73.73,
+          "lat": 42.7060,
+          "prevOwners": []
+        },
+        {
+          "id": "8",
+          "price": "$8.99",
+          "condition": "10",
+          "long": -73.71,
+          "lat": 42.7560,
+          "prevOwners": []
+        },
+        {
+          "id": "9",
+          "price": "$8.50",
+          "condition": "10",
+          "long": -73.67,
+          "lat": 42.752,
           "prevOwners": []
         },
     ],
@@ -253,28 +285,27 @@ function App() {
       </div>
       <div id="mainContent"className="h-5/6 flex flex-grow justify-center text-black rounded">
         {/* Map div */}
-        <div id="map" className="w-2/3 m-4 border-2 border-black shadow-lg rounded-md">
+        <div id="map" className="w-2/3 m-4 h-full border-2 border-black shadow-lg rounded-md">
         </div>
 
         {/* Info panel div */}
         <div id="listings" className="flex flex-col w-1/3">
-          <div className="m-4 min-h-screen border-2 border-black bg-white shadow-lg rounded-md">
+          <div className=" h-full m-4 border-2 border-black bg-white shadow-lg rounded-md">
             <div className="flex flex-col justify-center">
                 <h1 className="flex justify-center text-balance m-2 font-bold">Available Bikes</h1>
               <button type="button" className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
               >
-{/* onClick={handleNewLease} */}
                 <span className="relative z-10">New Bike Listing</span>
               </button>
             </div>
-            <div id="availableListings" className="h-1/4 flex flex-col m-3 overflow-auto">
+            <div id="availableListings" className="flex flex-col flex-grow-2 h-2/5 m-3 overflow-auto">
               {bikes.available.map((bike, index) => (
                 <>
                 {/* <hr></hr> */}
                 <div id={bike.id == highlightId ?"target-section":""} className={bike.id == highlightId ? "font-bold border-2 border-blue-500 p-2 rounded-lg shadow-xl" : "mt-2 mb-2 border-t-2" } key={index}>
-                  <p className="text-lg p-2 mt-2 mb-2">Bike ID: {bike.id}</p>
-                  <p className="text-lg p-2 mt-2 mb-2">Price: {bike.price}/hr</p>
-                  <p className="text-lg p-2 mt-2 mb-2">Distance From You: {haversineDistance(bike.lat, bike.long, userLoc.latitude, userLoc.longitude).toFixed(2)} miles</p>
+                  <p className="text-xl font-medium p-1 mt-2 mb-2">Bike ID: {bike.id}</p>
+                  <p className="text-xl font-medium p-1 mt-2 mb-2">Price: {bike.price}/hr</p>
+                  <p className="text-xl font-medium p-1 mt-2 mb-2">Distance From You: {haversineDistance(bike.lat, bike.long, userLoc.latitude, userLoc.longitude).toFixed(2)} miles</p>
                   {bike.id == highlightId ?                  
                     <button type="button" className="w-full text-red hover:before:bg-blue-500 border-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
                     onClick={() => handleRentOut(bike.id)}>
@@ -289,17 +320,17 @@ function App() {
             </div>
             <hr></hr>
             {/* <div className="flex flex-col justify-center"> */}
-                <h1 className="flex justify-center text-5xl font-bold">Currently Renting</h1>
-                <div id="currentlyLeasing" className="h-1/4 flex flex-col m-3 overflow-auto">
+                <h1 className="flex justify-center mt-10 text-5xl font-bold">Currently Renting</h1>
+                <div id="currentlyLeasing" className="flex flex-col h-1/5 flex-grow-1 m-3 overflow-y-auto">
                   {bikes.currentlyLeasing.map((bike, index) => (
                   <>
                   {/* <hr></hr> */}
                   <div className="mt-2 mb-2 border-t-2" key={index}>
-                    <p className="text-lg mt-2 mb-2">Bike ID: {bike.id}</p>
-                    <p className="text-lg mt-2 mb-2">Price: {bike.price}/hr</p>
-                    <p className="text-lg mt-2 mb-2">Last known location: {userLoc.latitude}, {userLoc.longitude} </p>
+                    <p className="text-xl font-medium p-1 mt-2 mb-2">Bike ID: {bike.id}</p>
+                    <p className="text-xl font-medium p-1 mt-2 mb-2">Price: {bike.price}/hr</p>
+                    <p className="text-xl font-medium p-1 mt-2 mb-2">Last known location: {userLoc.latitude.toFixed(2)}, {userLoc.longitude.toFixed(2)} </p>
                     <div className="flex flex-col justify-center">
-                      <button type="button" className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:left-0 hover:before:w-full"
+                      <button type="button" className="m-auto w-11/12 hover:before:bg-blue-500 relative h-[50px] overflow-hidden border border-blue-500 bg-white px-3 text-blue-500 transition-all before:absolute before:bottom-0 before:right-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-gradient-to-r before:from-blue-400 before:to-blue-700 before:transition-all before:duration-300 hover:text-white hover:before:right-0 hover:before:w-full"
                       onClick={() => handleListRental(bike.id)}>
                         <span className="relative z-10">Return Bike</span>
                       </button>
@@ -309,14 +340,8 @@ function App() {
                   </>
                   ))}
                 </div>
-            {/* </div> */}
-
-
           </div>
-
-
         </div>
-
       </div>
 
       {isOn && (
